@@ -10,71 +10,83 @@
     $sql = "SELECT * FROM ORGANIZER
     WHERE oID = $oID";
 
+    $result = mysqli_query($conn, $sql);
 
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
-$row = mysqli_fetch_assoc($result);  
-// Access individual columns directly
-$oName = $row['oName'];
-$oProfile = $row['oProfile'];
-$oDesc = $row['oDesc'];
-//  echo '<script type="text/javascript">alert("' . $eVenue . '")</script>';
-}
-
-
-// Assuming $eId is already defined or sanitized
-$sql = "SELECT e.*, o.*
-        FROM ORGANIZER o
-        LEFT JOIN event e ON o.oID = e.eOrganizer
-        WHERE o.oID = $oID AND e.eDate < CURDATE()";
-
-$resultPast = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($resultPast) > 0) {
-    // Initialize variables to store event details and performers
-    $pastEvents = [];
-    $pastEventCount = 0;
-
-    while ($row = mysqli_fetch_assoc($resultPast)) {
-        // Store performer details
-        $pastEvents[] = [
-            'eID' => $row['eID'],
-            'eTitle' => $row['eTitle'],
-            'eDesc' => $row['eDesc'],
-            'eBanner' => $row['eBanner'],
-            'eProfile' => $row['eProfile'],
-        ];
-
+    if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);  
+    // Access individual columns directly
+    $oName = $row['oName'];
+    $oProfile = $row['oProfile'];
+    $oDesc = $row['oDesc'];
+    //  echo '<script type="text/javascript">alert("' . $eVenue . '")</script>';
     }
-    
-} 
 
-// Assuming $eId is already defined or sanitized
+    // Assuming $eId is already defined or sanitized
+    $sql = "SELECT e.*, o.*
+            FROM ORGANIZER o
+            LEFT JOIN event e ON o.oID = e.eOrganizer
+            WHERE o.oID = $oID AND e.eDate < CURDATE()";
+
+    $resultPast = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($resultPast) > 0) {
+        // Initialize variables to store event details and performers
+        $pastEvents = [];
+        $pastEventCount = 0;
+
+        while ($row = mysqli_fetch_assoc($resultPast)) {
+            // Store performer details
+            $pastEvents[] = [
+                'eID' => $row['eID'],
+                'eTitle' => $row['eTitle'],
+                'eDesc' => $row['eDesc'],
+                'eBanner' => $row['eBanner'],
+                'eProfile' => $row['eProfile'],
+            ];
+
+        }
+        
+    } 
+
+    // Assuming $eId is already defined or sanitized
+    $sql = "SELECT e.*, o.*
+            FROM ORGANIZER o
+            LEFT JOIN event e ON o.oID = e.eOrganizer
+            WHERE o.oID = $oID AND e.eDate > CURDATE()";
+
+    $resultUpcoming = mysqli_query($conn, $sql);
+
 $sql = "SELECT e.*, o.*
         FROM ORGANIZER o
         LEFT JOIN event e ON o.oID = e.eOrganizer
-        WHERE o.oID = $oID AND e.eDate >= CURDATE()";
+        WHERE o.oID = $oID AND e.eDate > CURDATE()";
 
 $resultUpcoming = mysqli_query($conn, $sql);
 
-if (mysqli_num_rows($resultUpcoming) > 0) {
-    // Initialize variables to store event details and performers
-    $upcomingEvents = [];
-    $upcomingEventCount = 0;
+    if (mysqli_num_rows($resultUpcoming) > 0) {
+        // Initialize variables to store event details and performers
+        $upcomingEvents = [];
+        $upcomingEventCount = 0;
 
-    while ($row = mysqli_fetch_assoc($resultUpcoming)) {
-        // Store performer details
+        while ($row = mysqli_fetch_assoc($resultUpcoming)) {
+            // Store performer details
+            $upcomingEvents[] = [
+                'eID' => $row['eID'],
+                'eTitle' => $row['eTitle'],
+                'eDesc' => $row['eDesc'],
+                'eBanner' => $row['eBanner'],
+                'eProfile' => $row['eProfile'],
+            ];
+
+        }
+    }else{
         $upcomingEvents[] = [
-            'eID' => $row['eID'],
-            'eTitle' => $row['eTitle'],
-            'eDesc' => $row['eDesc'],
-            'eBanner' => $row['eBanner'],
-            'eProfile' => $row['eProfile'],
+            'eID' => '',
+            'eTitle' => 'No Upcoming Events',
+            'eDesc' => 'There are no upcoming events',
+            'eBanner' => '',
+            'eProfile' => '',
         ];
-
     }
-} 
 
 
 
@@ -122,8 +134,8 @@ if (mysqli_num_rows($resultUpcoming) > 0) {
                     close
                 </span>
                 <li><a href="#">Home</a></li>
-                <li><a href="#">Upcoming Event</a></li>
-                <li><a href="#">Past Event</a></li>
+                <li><a href="#upcoming-event">Upcoming Event</a></li>
+                <li><a href="#past-event">Past Event</a></li>
                 <li><a href="h_status.php">Status</a></li>
                 <li ><a href="index.php" id="logout-button">Logout</a></li>
             </ul>
@@ -428,7 +440,10 @@ if (isset($_POST['profile_submit_button'])) {
         if (isset($_POST['view-button-upcoming'])) {
             $button_value = $_POST['view-button-upcoming'];
             $_SESSION['eID'] = $button_value;
-            echo ("<script>window.location.href='eventDetail.php'</script>");
+            if($button_value){
+
+            echo ("<script>window.location.href='eventDetail.php'</script>");   
+            }
 
         }elseif(isset($_POST['view-button-past'])) {
             $button_value = $_POST['view-button-past'];

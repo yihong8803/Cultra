@@ -49,11 +49,11 @@
               <input type="password" placeholder="Password" name="signPswd" required/>
             </div>
 
-            <div class="radiobutton">
+            <div class="radiobutton" style="padding:10px;">
             <input type="radio" id="rbtnOrganizer" name="rbtn" value="rbtnOrganizer" required>
-            <label for="rbtnOrganizer">Organizer</label>
+            <label for="rbtnOrganizer" style="padding:10px;">Organizer</label>
             <input type="radio" id="rbtnPerformer" name="rbtn" value="rbtnPerformer">
-            <label for="rbtnPerformer">Performer</label><br>
+            <label for="rbtnPerformer" style="padding:10px;">Performer</label><br>
             </div>
 
             <input type="submit" class="btn" value="Sign up" name="btnRegister"/>
