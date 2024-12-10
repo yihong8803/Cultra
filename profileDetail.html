@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Detail</title>
+    <link rel="stylesheet" href="profileDetail.css">
+</head>
+<body>
+    <div class="profile-detail-container">
+        <div class="profile-header">
+            <div class="uploadCover-box">
+                <input type="file" id="my_image" class="uploadImg" name="my_image" accept="image/jpeg, image/png" style="display: none;" onchange="handleImageSelect(event)">
+                <label for="my_image">
+                    <img src="images/performer/banner/image-6689d8a2f293b1.35070715.jpeg" id="profile-banner" alt="Profile Banner" class="profile-banner">
+                </label>
+            </div>
+            <div class="profile-logo-title">
+                <input type="file" id="my_profile" class="uploadImg" name="my_profile" accept="image/jpeg, image/png" style="display: none;" onchange="handleProfileImageSelect(event)">
+                <label for="my_profile">
+                    <img src="images/performer/profile/DariusLeeShinProfilePicture.jpg" id="profile-photo" alt="Profile Photo" class="profile-logo">
+                </label>
+                <h1 class="profile-name">John Doe</h1>
+            </div>
+            <button class="edit-btn">
+                <img src="assets/edit.png" alt="Edit" class="edit-icon">
+            </button>
+        </div>
+        <div class="profile-meta">
+            <h2>Position</h2>
+            <p class="profile-position">Lead Singer</p>
+            <h2>Profile Description</h2>
+            <p class="profile-description">John is an experienced performer with a passion for music and dance.</p>
+            <h2>Talents</h2>
+            <ul class="profile-talents">
+                <li>Singing</li>
+                <li>Dancing</li>
+                <li>Guitar</li>
+            </ul>
+        </div>
+        <hr>
+        <div class="edit-form-container" id="edit-form">
+            <h2>Edit Profile Details</h2>
+            <form>
+                <label for="edit-name">Name:</label>
+                <input type="text" id="edit-name" name="edit-name" value="John Doe">
+                
+                <label for="edit-position">Position:</label>
+                <input type="text" id="edit-position" name="edit-position" value="Lead Singer">
+                
+                <label for="edit-description">Description:</label>
+                <textarea id="edit-description" name="edit-description">John is an experienced performer with a passion for music and dance.</textarea>
+                
+                <label for="edit-talents">Talents: (Seperate by full stop '.')</label>
+                <textarea id="edit-talents" name="edit-talents">Singing.Dancing.Guitar</textarea>
+                
+                <button type="submit" class="btn save-btn">Save</button>
+                <button type="button" class="btn cancel-btn" onclick="cancelEdit()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('profile-banner');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleProfileImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('profile-photo');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('.edit-btn').addEventListener('click', function() {
+            document.getElementById('edit-form').style.display = 'block';
+        });
+
+        function cancelEdit() {
+            document.getElementById('edit-form').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

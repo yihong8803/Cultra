@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hire Status</title>
+
+    <!-- Links for google font icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/1aec3f9d30.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/CSS/status.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-left">
+                <div class="logo-section">
+                    <a href="#">
+                        <img src="./assets/images/CULTRA_logo.png" alt="Cultra Logo">
+                    </a>
+                    <h1>CULTRA</h1>
+                </div>
+                <div class="user-profile">
+                    <img src="./assets/images/profile & event pic/DariusLeeShinProfilePicture.jpg" alt="user profile picture" onclick="toProfile()"> 
+                    <h3>Darius Lee Shin</h3>
+                </div>
+            </div>
+            <ul class="menu-links">
+                <li><a href="performer_home.html">Home</a></li>
+                <li><a href="#">Upcoming Event</a></li>
+                <li><a href="#">Past Event</a></li>
+                <li><a href="#" onclick="toStatus()">Status</a></li>
+                <li ><a href="#" id="logout-button" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="request-hire">
+            <ul>
+                <li class="li-request" onclick="toRequest()">Request</li>
+                <li class="li-hire">Hire</li>
+            </ul>
+        </div>
+
+        <div class="event-status"></div>
+        <div class="pagination">
+            <!-- Pagination buttons will be generated here -->
+        </div>
+    </main>
+
+    <script>
+        function logout() {
+            alert('Logout button clicked');
+            window.location.href = 'logIn_signUp.html';
+        }
+
+        function toRequest() {
+            window.location.href = 'r_status.html';
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const eventStatusContainer = document.querySelector('.event-status');
+            const paginationContainer = document.querySelector('.pagination');
+
+            const staticEvents = [
+                { id: 1, name: 'Red Sonata Fiesta 2024', status: 'pending' },
+                { id: 2, name: 'Festival of Colours 2024', image: 'images/logo.png',status: 'rejected' },
+                { id: 3, name: 'Festival of Colours 2024', status: 'accepted' },
+                { id: 4, name: 'Spring Gala 2024', status: 'pending' },
+                { id: 5, name: 'Summer Bash 2024', status: 'accepted' },
+                { id: 6, name: 'Autumn Fest 2024', status: 'pending' }
+            ];
+
+            const eventsPerPage = 3;
+            let currentPage = 1;
+
+            function renderEvents(page) {
+                eventStatusContainer.innerHTML = '';
+                const startIndex = (page - 1) * eventsPerPage;
+                const endIndex = startIndex + eventsPerPage;
+                const eventsToRender = staticEvents.slice(startIndex, endIndex);
+
+                eventsToRender.forEach(event => {
+                    const eventBox = createEventBox(event);
+                    eventStatusContainer.appendChild(eventBox);
+                });
+            }
+
+            function createEventBox(event) {
+                const eventBox = document.createElement('div');
+                eventBox.className = 'event-status-box';
+
+                 // Create image element
+                 const img = document.createElement('img');
+                            img.src = event.image;
+                            img.alt = event.name;
+                            eventBox.appendChild(img);
+
+                const eventName = document.createElement('div');
+                eventName.textContent = event.name;
+                eventName.className = 'event-name';
+                eventBox.appendChild(eventName);
+
+                
+
+                const statusAccept = document.createElement('button');
+                statusAccept.textContent = 'Accept';
+                statusAccept.className = 'statusAccept';
+                statusAccept.addEventListener('click', () => {
+                    alert('Event Accepted!');
+                });
+
+                const statusReject = document.createElement('button');
+                statusReject.textContent = 'Reject';
+                statusReject.className = 'statusReject';
+                statusReject.addEventListener('click', () => {
+                    alert('Event Rejected!');
+                });
+
+                eventBox.appendChild(statusAccept);
+                eventBox.appendChild(statusReject);
+                return eventBox;
+            }
+
+            function renderPagination() {
+                paginationContainer.innerHTML = '';
+                const totalPages = Math.ceil(staticEvents.length / eventsPerPage);
+
+                const prevButton = document.createElement('button');
+                prevButton.textContent = '<';
+                prevButton.className = 'arrow';
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderEvents(currentPage);
+                        renderPagination();
+                    }
+                });
+
+                const nextButton = document.createElement('button');
+                nextButton.textContent = '>';
+                nextButton.className = 'arrow';
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderEvents(currentPage);
+                        renderPagination();
+                    }
+                });
+
+                paginationContainer.appendChild(prevButton);
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i;
+                    button.className = i === currentPage ? 'active' : '';
+                    button.addEventListener('click', () => {
+                        currentPage = i;
+                        renderEvents(currentPage);
+                        renderPagination();
+                    });
+                    paginationContainer.appendChild(button);
+                }
+
+                paginationContainer.appendChild(nextButton);
+            }
+
+            renderEvents(currentPage);
+            renderPagination();
+        });
+
+        function toProfile(){
+            alert('Entering Profile');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Links for google font icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/1aec3f9d30.js" crossorigin="anonymous"></script>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="organizer_home.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-left">
+                <div class="logo-section">
+                    <a href="#">
+                        <img src="./assets/images/CULTRA_logo.png" alt="Cultra Logo">
+                    </a>
+                    <h1>CULTRA</h1>
+                </div>
+                <div class="user-profile">
+                    <img src="./assets/images/profile & event pic/DariusLeeShinProfilePicture.jpg" alt="user profile picture">
+                    <h3>Darius Lee Shin</h3>
+                </div>
+            </div>
+            <ul class="menu-links">
+                <span id="close-menu-button" class="material-symbols-outlined">
+                    close
+                </span>
+                <li><a href="#">Home</a></li>
+                <li><a href="#propose-event">Propose Event</a></li>
+                <li><a href="#upcoming-event">Upcoming Event</a></li>
+                <li><a href="#past-event">Past Event</a></li>
+                <li ><a href="#" id="logout-button">Logout</a></li>
+            </ul>
+            <span id="hamburger-button" class="material-symbols-outlined">
+                menu
+            </span>
+        </nav>
+    </header>
+
+    <section id="home" class="search-home">
+        <form action="submit" class="search-bar">
+            <input type="text" placeholder="Search here...">
+            <button type="submit" id="search-button">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+            </button>
+        </form>
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <!-- <button type="submit" class="swiper-slide" value="">Slide1</button>
+                <button type="submit" class="swiper-slide" value="">Slide2</button> -->
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+	        <div class="swiper-button-next"></div>
+        </div>
+    </section>
+
+    <section id="propose-event" class="organizer-home">
+        <div class="home-content">
+            <h1 class="title">The Bridge Between Talent and Events</h1>
+            <ul class="content-list">
+                <li>Easy-to-use interface for both performers and organizers.</li>
+                <li>Search for finding the perfect match</li>
+                <li>Foster successful and memorable events</li>
+            </ul>
+        </div>
+        <button class="propose-button">Propose an Event</button>
+    </section>
+
+    <h1 class="section-title">UPCOMING EVENT</h1>
+    <section id="upcoming-event" class="upcoming-event">
+        <div class="content">
+            <div class="event-title"></div>
+            <div class="event-details"></div>
+            <button class="view-event-details">View Details</button>
+        </div>
+        <div class="event-image-container">
+            <img class = "event-logo" src="" alt="">
+            <div class="switch-logo-button">
+                <span id = "upcoming-arrow-left" class="material-symbols-outlined">chevron_left</span>
+                <span id = "upcoming-arrow-right" class="material-symbols-outlined">chevron_right</span>
+            </div>
+        </div>
+    </section>
+
+    <h1 class="section-title">PAST EVENT</h1>
+    <section id="past-event" class="past-event">
+        <div class="content">
+            <div class="event-title"></div>
+            <div class="event-details"></div>
+            <button class="view-event-details">View Details</button>
+        </div>
+        <div class="event-image-container">
+            <img class = "event-logo" src="" alt="">
+            <div class="switch-logo-button">
+                <span id = "past-arrow-left" class="material-symbols-outlined">chevron_left</span>
+                <span id = "past-arrow-right" class="material-symbols-outlined">chevron_right</span>
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        function logout() {
+            alert('Logout button clicked');
+            window.location.href = 'logIn_signUp.html'; 
+        }
+
+        function toStatus(){
+            window.location.href='r_status.html';
+        }
+
+        function toProfile(){
+            alert('Entering Profile');
+        }
+
+        const doms = {
+            header: document.querySelector("header"),
+            hamburgerBtn: document.querySelector("#hamburger-button"),
+            closeMenuBtn: document.querySelector("#close-menu-button"),
+            swiperWrapper: document.querySelector(".swiper-wrapper"),
+
+            // the doms for the upcoming events
+            upcoming_event_bg: document.querySelector(".upcoming-event"),
+            upcoming_event_title: document.querySelector(".upcoming-event .content .event-title"),
+            upcoming_event_des: document.querySelector(".upcoming-event .content .event-details"),
+            upcoming_event_logo: document.querySelector(".upcoming-event .event-image-container .event-logo"),
+            upcoming_arrow_left: document.getElementById("upcoming-arrow-left"),
+            upcoming_arrow_right: document.getElementById("upcoming-arrow-right"),
+
+            // the doms for the past events
+            past_event_bg: document.querySelector(".past-event"),
+            past_event_title: document.querySelector(".past-event .content .event-title"),
+            past_event_des: document.querySelector(".past-event .content .event-details"),
+            past_event_logo: document.querySelector(".past-event .event-image-container .event-logo"),
+            past_arrow_left: document.getElementById("past-arrow-left"),
+            past_arrow_right: document.getElementById("past-arrow-right"),
+        };
+
+        // swiperJS api
+        var swiper = new Swiper(".mySwiper", {
+                slidesPerView: 4,
+                grid: {
+                    rows: 2,
+                },
+                spaceBetween: 30,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+
+        // Dummy data for events
+        const events = {
+            upcoming: [
+            {
+                name: "Red Sonata Festival 2024",
+                description: "The Red Sonata Fiesta International Arts Festival is a significant cultural event celebrating Chinese heritage. It features various competitions in orchestral music and dance, engaging participants from primary schools, secondary schools, and the public. This year event theme, “Strelitzia and Crane” , symbolizes freedom.",
+                image: "./assets/images/PICTURE_OF_EVENT/rsf/rsf_pic.jpg",
+                logo: "./assets/images/PICTURE_OF_EVENT/rsf/rsf_logo.png"
+            },
+            {
+                name: "FESCO 2024",
+                description: "Festival of Colours of the World is an annual event that celebrates the abundance of culture and heritage around the world. Universiti Teknologi PETRONAS.",
+                image: "./assets/images/PICTURE_OF_EVENT/fesco/fesco_pic.jpg",
+                logo: "./assets/images/PICTURE_OF_EVENT/fesco/fesco_logo.png"
+            },
+            {
+                name: "PETROBOTS Maker Fair 2024",
+                description: "PETROBOTS Maker Fair 2024 is an event under UTP PETROBOTS. This event is an initiative aimed at introducing robotics skills and providing a platform especially for UTP students to engage with different companies that specialize in engineering fields such as artificial intelligence, robotics, and drones through exhibitions.",
+                image: "./assets/images/PICTURE_OF_EVENT/pmf/pmf_pic.jpg",
+                logo: "./assets/images/PICTURE_OF_EVENT/pmf/maker_fair_logo.png"
+            }
+        ],
+        past: [
+            {
+                name: "Convofest 2024",
+                description: "CONVOFEST is an annual event in conjunction with UTP's Convocation ceremony, held to celebrate our graduates together with the surrounding community!",
+                image: "./assets/images/PAST_EVENT/convofest/Convofest_pic.jpg",
+                logo: "./assets/images/PAST_EVENT/convofest/Convofest_logo.png"
+            },
+            {
+                name: "The Grandeur",
+                description: "The Grandeur is a grand convergence of three arts and culture clubs in UTP, UTPCO, UTPSE and Sanggar Kirana. A concert brimming with culture and diversity, with performances from all three 3 clubs as well as collaboration performances.",
+                image: "./assets/images/PAST_EVENT/grandeur/Grandeur_pic.jpg",
+                logo: "./assets/images/PAST_EVENT/grandeur/The_Grandeur_logo.png"
+            },
+            {
+                name: "ROAR 2024",
+                description: "The vision for ROAR is to serve as a platform for preparing a well-rounded campus community. The main goal is to assist the Residential College in finding the role model for nurturing a community of excellence in academics, personality and achievement.",
+                image: "./assets/images/PAST_EVENT/roar/Roar2024_pic.png",
+                logo: "./assets/images/PAST_EVENT/roar/Roar2024_logo.png"
+            }
+        ]
+    };
+
+    let countUpcomingEvents = events.upcoming.length;
+    let currUpcoming = 0;
+
+    let countPastEvents = events.past.length;
+    let currPast = 0;
+
+    // function to genearte the initial performer grid during the first running of webpage
+    function generatePerformerGrid(eventsArray, domContainer){
+        // <div class="swiper-wrapper">
+        //     <button type="submit" class="swiper-slide" value="">Slide1</button>
+        for (let i = 0; i < eventsArray.length; i++){
+            eventsArray.forEach(event => {
+                const performer_slide= document.createElement("button");
+                performer_slide.className = "swiper-slide";
+                performer_slide.type = "submit";
+                performer_slide.value = "";
+                performer_slide.style.background = `url(${event.image})`;
+                performer_slide.textContent = event.name;
+                
+                domContainer.appendChild(performer_slide);
+            });
+        }
+        
+    };
+
+    // Function to update upcoming event based on index
+    function updateUpcomingEvent(index) {
+        const event = events.upcoming[index];
+        doms.upcoming_event_bg.style.background = `url(${event.image})`;
+        doms.upcoming_event_logo.src = event.logo;
+        doms.upcoming_event_title.textContent = event.name;
+        doms.upcoming_event_des.textContent = event.description;
+    }
+
+    // Function to update past event based on index
+    function updatePastEvent(index) {
+        const event = events.past[index];
+        doms.past_event_bg.style.background = `url(${event.image})`;
+        doms.past_event_logo.src = event.logo;
+        doms.past_event_title.textContent = event.name;
+        doms.past_event_des.textContent = event.description;
+    }
+
+    // Initialize event listeners for arrow buttons
+    doms.upcoming_arrow_left.addEventListener("click", function() {
+        moveUpcomingToLeft();
+    });
+
+    doms.upcoming_arrow_right.addEventListener("click", function() {
+        moveUpcomingToRight();
+    });
+
+    doms.past_arrow_left.addEventListener("click", function() {
+        movePastToLeft();
+    });
+
+    doms.past_arrow_right.addEventListener("click", function() {
+        movePastToRight();
+    });
+
+
+    function moveUpcomingToLeft() {
+        currUpcoming = (currUpcoming === 0) ? countUpcomingEvents - 1 : currUpcoming - 1;
+        updateUpcomingEvent(currUpcoming);
+    }
+
+    function moveUpcomingToRight() {
+        currUpcoming = (currUpcoming === countUpcomingEvents - 1) ? 0 : currUpcoming + 1;
+        updateUpcomingEvent(currUpcoming);
+    }
+
+    function movePastToLeft() {
+        currPast = (currPast === 0) ? countPastEvents - 1 : currPast - 1;
+        updatePastEvent(currPast);
+    }
+
+    function movePastToRight() {
+        currPast = (currPast === countPastEvents - 1) ? 0 : currPast + 1;
+        updatePastEvent(currPast);
+    }
+
+    // code for responsive view
+    doms.hamburgerBtn.addEventListener("click", ()=>{
+        doms.header.classList.toggle("show-mobile-menu");
+    });
+
+    doms.closeMenuBtn.addEventListener("click", ()=>{
+        doms.hamburgerBtn.click();
+    });
+
+    // generateHomeEvent(events.past, doms.pastEventsContainer);
+    function init(){
+        // Set the default title, description, logo, and background when the program starts
+        updateUpcomingEvent(0);
+        updatePastEvent(0);
+    }
+    init();
+    generatePerformerGrid(events.upcoming, doms.swiperWrapper);
+
+
+    </script>
+
+</body>
+</html>

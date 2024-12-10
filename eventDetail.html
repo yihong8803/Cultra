@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Detail</title>
+    <link rel="stylesheet" href="eventDetail.css">
+</head>
+<body>
+    <form id="confirmationForm" method="post" action="">
+        <input type="hidden" id="confirmationValue" name="confirmationValue" value="">
+        <input type="hidden" id="deleteID" name="deleteID" value="">
+    </form>
+
+    <div class="event-detail-container">
+        <div class="event-header">
+            <div class="uploadCover-box">
+                <input type="file" id="my_image" name="my_image" accept="image/jpeg, image/png" onchange="handleImageSelect(event)">
+                <label for="my_image">
+                    <img src="images/event/banner/default-banner.jpg" id="event-banner" alt="Event Banner" class="event-banner">
+                </label>
+                <input type="submit" id="banner_submit_button" name="banner_submit_button" style="display: none;">
+            </div>
+            <div class="profile-logo-title">
+                <input type="file" id="my_profile" name="my_profile" accept="image/jpeg, image/png" onchange="handleProfileImageSelect(event)">
+                <label for="my_profile">
+                    <img src="images/event/profile/default-profile.jpg" alt="Profile Photo" class="profile-logo">
+                </label>
+                <input type="submit" id="profile_submit_button" name="profile_submit_button" style="display: none;">
+                <h1 class="event-title">Event Title</h1>
+            </div>
+            <button class="edit-btn">
+                <img src="assets/edit.png" alt="Edit" class="edit-icon">
+            </button>
+        </div>
+        <div class="event-meta">
+            <span class="event-date">Date: 2023-01-01</span>
+            <span class="event-time">Time: 10:00 AM</span>
+            <span class="event-venue">Venue: Sample Venue</span>
+            <span class="event-organizer">Organized by: Organizer Name</span>
+        </div>
+        <hr>
+        <h2>Event Description</h2>
+        <p class="event-description">This is a sample event description.</p>
+        <h2>Requirement</h2>
+        <ul class="event-requirements">
+            <li>Requirement 1</li>
+            <li>Requirement 2</li>
+        </ul>
+        <h2>About the Job</h2>
+        <p class="event-about">This section provides details about the job.</p>
+
+        <div class="hire-list-container">
+            <h2>Hire List</h2>
+            <ul class="hire-list" id="list1">
+                <!-- Performers will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+    <div class="edit-form-container" id="edit-form">
+        <h2>Edit Event Details</h2>
+        <form action="#" method="post">
+            <label for="edit-title">Event Title:</label>
+            <input type="text" id="edit-title" name="edit-title" value="">
+            
+            <label for="edit-date">Date:</label>
+            <input type="date" id="edit-date" name="edit-date" value="">
+            
+            <label for="edit-time">Time:</label>
+            <input type="text" id="edit-time" name="edit-time" value="">
+            
+            <label for="edit-venue">Venue:</label>
+            <input type="text" id="edit-venue" name="edit-venue" value="">
+            
+            <label for="edit-organizer">Organizer:</label>
+            <input type="text" id="edit-organizer" name="edit-organizer" value="">
+            
+            <label for="edit-description">Description:</label>
+            <textarea id="edit-description" name="edit-description"></textarea>
+            
+            <label for="edit-requirements">Requirements:</label>
+            <textarea id="edit-requirements" name="edit-requirements"></textarea>
+            
+            <label for="edit-about">About the Job:</label>
+            <textarea id="edit-about" name="edit-about"></textarea>
+            
+            <button type="submit" class="btn save-btn" onclick="saveChanges()">Save</button>
+            <button type="button" class="btn cancel-btn" onclick="cancelEdit()">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('event-banner');
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleProfileImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.querySelector('.profile-logo');
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeContent(btn, pID) {
+            if (confirm("Are you sure you want to remove this item?")) {
+                const li = btn.closest('li');
+                const deleteID = document.getElementById('deleteID');
+                deleteID.value = pID;
+                const confirmationValue = document.getElementById('confirmationValue');
+                confirmationValue.value = 'yes';
+                const confirmationForm = document.getElementById('confirmationForm');
+                confirmationForm.submit();
+                li.remove();
+            }
+        }
+
+        function toggleEditForm() {
+            const form = document.getElementById('edit-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.querySelector('.edit-btn').addEventListener('click', toggleEditForm);
+
+        function saveChanges() {
+            // Add logic to save changes
+            toggleEditForm();
+        }
+
+        function cancelEdit() {
+            toggleEditForm();
+        }
+
+        // Example function to add performers to the hire list
+        function addPerformerToList(performer) {
+            const hireList = document.getElementById('list1');
+            const li = document.createElement('li');
+            li.classList.add('hire-item');
+            li.innerHTML = `
+                <div>
+                    <img src="${performer.photo}" alt="Profile Photo" class="profile-photo">
+                    <span class="performer-name">${performer.name}</span>
+                </div>
+                <div class="remove-container">
+                    <img src="assets/trash.png" alt="Trash" class="trash-icon">
+                    <button class="remove-btn" onclick="removeContent(this, '${performer.id}')">Remove</button>
+                </div>
+            `;
+            hireList.appendChild(li);
+        }
+
+        // Sample performer data
+        const samplePerformers = [
+            { id: '1', name: 'Performer 1', photo: 'images/profile1.jpg' },
+            { id: '2', name: 'Performer 2', photo: 'images/profile2.jpg' },
+        ];
+
+        // Add sample performers to the list on page load
+        window.onload = function() {
+            samplePerformers.forEach(addPerformerToList);
+        };
+    </script>
+</body>
+</html>

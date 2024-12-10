@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome, Performer</h1>
+        <nav>
+            <ul>
+                <li><a href="#" id="upcoming-events">Upcoming Events</a></li>
+                <li><a href="#" id="past-events">Past Events</a></li>
+                <li><a href="#" id="notifications">Notifications</a></li>
+            </ul>
+        </nav>
+        <div id="content"></div>
+    </div>
+    <script>
+        document.getElementById('upcoming-events').addEventListener('click', function() {
+    loadEvents('upcoming');
+});
+
+document.getElementById('past-events').addEventListener('click', function() {
+    loadEvents('past');
+});
+
+document.getElementById('notifications').addEventListener('click', function() {
+    loadNotifications();
+});
+
+function loadEvents(type) {
+    const content = document.getElementById('content');
+    content.innerHTML = ''; // Clear current content
+
+    // Example event data
+    const events = type === 'upcoming' ? [
+        { title: 'Event 1', description: 'Upcoming event 1' },
+        { title: 'Event 2', description: 'Upcoming event 2' }
+    ] : [
+        { title: 'Event 3', description: 'Past event 1' },
+        { title: 'Event 4', description: 'Past event 2' }
+    ];
+
+    events.forEach(event => {
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event';
+        eventDiv.innerHTML = `<h2>${event.title}</h2><p>${event.description}</p><button onclick="viewEventDetail()">Event Detail</button>`;
+        content.appendChild(eventDiv);
+    });
+}
+
+function loadNotifications() {
+    const content = document.getElementById('content');
+    content.innerHTML = ''; // Clear current content
+
+    // Example notification data
+    const notifications = [
+        { message: 'You have a new hire request', type: 'hire' },
+        { message: 'Your self-request was accepted', type: 'self' }
+    ];
+
+    notifications.forEach(notification => {
+        const notificationDiv = document.createElement('div');
+        notificationDiv.className = 'notification';
+        notificationDiv.innerHTML = `<p>${notification.message}</p>`;
+        content.appendChild(notificationDiv);
+    });
+}
+
+function viewEventDetail() {
+    window.location.href = 'event_detail.html';
+}
+
+
+    </script>
+</body>
+</html>

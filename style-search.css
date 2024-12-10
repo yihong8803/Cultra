@@ -1,0 +1,193 @@
+body {
+  background-image: linear-gradient(to bottom right, #130c28,black);
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 20px 15px;
+  background: #39393d41;
+  z-index: 1000; /* Added to ensure the header is above other elements */
+}
+
+header .navbar {
+  max-width: 1800px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar .menu-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 65px;
+  gap: 50px;
+  list-style: none;
+}
+
+/* logo section */
+.navbar .navbar-left {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 50px;
+}
+
+.navbar .navbar-left .logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.navbar .navbar-left .logo-section img {
+  width: 50px;
+  height: 50px;
+}
+
+/* user profile picture and details */
+.navbar .navbar-left .user-profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar .navbar-left .user-profile img {
+  width: 50px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.navbar .navbar-left .user-profile h3 {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+/* search bar */
+.menu-links .search-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.menu-links .search-bar input {
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  height: 30px;
+  width: 180px;
+  padding: 0 20px;
+}
+
+.menu-links .search-bar #search-button {
+  color: #fff;
+  background: transparent;
+  border: none;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+/* links to other sections */
+.navbar .menu-links a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s ease;
+  font-size: 1.1rem;
+  gap: 5px;
+}
+
+.navbar .menu-links a:hover {
+  color: var(--themColor);
+}
+
+.navbar .menu-links #logout-button {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  padding: 8px 15px;
+}
+
+.navbar .menu-links #logout-button:hover {
+  background-color: var(--themColor);
+  border-color: transparent;
+  color: #fff;
+}
+
+.events {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin-top: 110px;
+}
+
+.event-box {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.3s;
+  height: 30vh;
+  width: 20vw;
+  cursor: pointer;
+}
+
+.event-box img {
+  height: 30vh;
+  width: 20vw;
+  border-radius: 10px;
+}
+
+.event-name {
+ margin: auto;
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+}
+
+.event-box:hover {
+  transform: scale(1.08);
+}
+
+.pagination {
+  text-align: center;
+  padding: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: #110B23;
+  box-shadow: inset 5px 5px 0px #07040e,
+              inset -5px -5px 0px #1b1238;
+  cursor: pointer;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  margin: 0 5px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: #110B23;
+    box-shadow: inset 5px 5px 0px #07040e,
+                inset -5px -5px 0px #1b1238;
+    cursor: pointer;
+    color: #fff;
+}
+
+.pagination button.arrow {
+  border-radius: 50%;
+  background: #110B23;
+  box-shadow: inset 5px 5px 0px #07040e,
+              inset -5px -5px 0px #1b1238;
+  cursor: pointer;
+  color: #fff;
+}
